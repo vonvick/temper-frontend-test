@@ -1,11 +1,14 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <CardComponent />
+  </div>
 </template>
 
 <script>
+import CardComponent from "@/components/CardComponent";
 export default {
   name: "App",
-  components: {}
+  components: { CardComponent }
 };
 </script>
 
