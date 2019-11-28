@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <CardComponent />
+    <PostItem
+      title="Testing App"
+      :item-index="2"
+      :total-length="10"
+      @movePostUp="movePostUp"
+      @movePostDown="movePostUDown"
+    />
   </div>
 </template>
 
 <script>
-import CardComponent from "@/components/CardComponent";
+import PostItem from "@/components/PostItem";
 export default {
   name: "App",
-  components: { CardComponent }
+  components: { PostItem },
+  methods: {
+    movePostUp() {
+      console.log("I was called up");
+    },
+    movePostDown() {
+      console.log("I wass called down");
+    }
+  }
 };
 </script>
 
