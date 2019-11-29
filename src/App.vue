@@ -1,27 +1,32 @@
 <template>
   <div id="app">
     <PostItem
-      title="Testing App"
-      :item-index="2"
-      :total-length="10"
-      @movePostUp="movePostUp"
-      @movePostDown="movePostUDown"
+      v-for="(post, postIndex) in postsList"
+      :key="post.id"
+      :item="post"
+      :item-index="postIndex"
+      :total-length="postsList.length"
+      v-on:move-post="movePostItem"
     />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import PostItem from "@/components/PostItem";
 export default {
   name: "App",
   components: { PostItem },
+  created() {
+    this.fetchPostItems({ limit: 5 });
+  },
   methods: {
-    movePostUp() {
-      console.log("I was called up");
-    },
-    movePostDown() {
-      console.log("I wass called down");
-    }
+    ...mapActions(["movePostItem", "fetchPostItems"])
+  },
+  computed: {
+    ...mapGetters({
+      postsList: ["getPostLists"]
+    })
   }
 };
 </script>

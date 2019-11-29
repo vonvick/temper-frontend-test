@@ -14,8 +14,11 @@ export default new Vuex.Store({
     updatePostsList: (state, payload) => {
       state.postsList = payload;
     },
-    updateLoadingState: (state, payload) => {
+    setLoadingState: (state, payload) => {
       state.loading = payload;
+    },
+    updateActionsList: (state, payload) => {
+      state.actionsList.push(payload);
     }
   },
   actions: {
@@ -24,9 +27,9 @@ export default new Vuex.Store({
 
       try {
         const { limit = 5 } = payload;
-        const response = await PostService.fetchPostItems();
+        const response = await PostService.fetchPostsList();
 
-        const postItems = response.data.data;
+        const postItems = response.data;
 
         commit("updatePostsList", postItems.slice(0, limit));
         dispatch("updateLoadingState", false);
@@ -35,6 +38,20 @@ export default new Vuex.Store({
 
         throw new Error(error);
       }
+    },
+    movePostItem: async ({ commit }, { index, direction, item }) => {
+      const movePayload = {
+        from: index,
+        to: index + direction,
+        text: function() {
+          return `moved post with ID:${item.id} from position ${this.from} to ${this.to}`;
+        }
+      };
+
+      commit("updateActionsList", movePayload);
+    },
+    updateLoadingState: ({ commit }, payload) => {
+      commit("setLoadingState", payload);
     }
   },
   getters: {
