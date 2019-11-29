@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import PostService from "@/services/postService";
+import { applyActionList } from "@/helpers/applyActionList";
 
 Vue.use(Vuex);
 
@@ -8,7 +9,8 @@ export default new Vuex.Store({
   state: {
     loading: false,
     postsList: [],
-    actionsList: []
+    actionsList: [],
+    lastActionIndex: -1
   },
   mutations: {
     updatePostsList: (state, payload) => {
@@ -55,7 +57,12 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getPostLists: state => state.postsList,
+    getPostLists: state =>
+      applyActionList({
+        postsList: state.postsList,
+        actionsList: state.actionsList,
+        lastActionIndex: state.lastActionIndex
+      }),
     getLoadingState: state => state.loading
   },
   modules: {}
