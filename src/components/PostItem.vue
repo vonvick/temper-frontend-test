@@ -1,25 +1,39 @@
 <template>
   <CardComponent>
     <template>
-      <div class="flex-inline items-center">
-        <h6>{{ title }}</h6>
-        <span class="flex-col justify-between">
-          <span class="up-action-container">
-            <span
-              v-if="itemIndex > 0"
-              class="chevron"
-              @click="movePostUp"
-            ></span>
-          </span>
+      <div class="flex items-center">
+        <div class="w-4/5">
+          <h6>{{ item.title }}</h6>
+        </div>
+        <div class="w-1/5 flex-col">
+          <div
+            v-if="itemIndex > 0"
+            class="up-action-container"
+            @click="
+              $emit('move-post', {
+                direction: -1,
+                item,
+                index: itemIndex
+              })
+            "
+          >
+            <span class="chevron top"></span>
+          </div>
 
-          <span class="down-action-container">
-            <span
-              v-if="itemIndex < totalLength"
-              class="chevron bottom"
-              @click="movePostDown"
-            ></span>
-          </span>
-        </span>
+          <div
+            v-if="itemIndex < totalLength - 1"
+            class="down-action-container"
+            @click="
+              $emit('move-post', {
+                direction: 1,
+                item,
+                index: itemIndex
+              })
+            "
+          >
+            <span class="chevron bottom"></span>
+          </div>
+        </div>
       </div>
     </template>
   </CardComponent>
@@ -31,27 +45,30 @@ export default {
   name: "PostItem",
   components: { CardComponent },
   props: {
-    title: String,
+    item: Object,
     itemIndex: Number,
-    totalLength: Number,
-    movePostUp: Function,
-    movePostDown: Function
+    totalLength: Number
   }
 };
 </script>
 <style lang="postcss" scoped>
+.up-action-container,
+.down-action-container {
+  position: relative;
+}
 .chevron::before {
   border-style: solid;
-  border-width: 0.25em 0.25em 0 0;
+  border-width: 0.125rem 0.125rem 0 0;
   content: "";
   display: inline-block;
-  height: 0.45em;
+  height: 0.75rem;
   left: 0.15em;
   position: relative;
   top: 0.15em;
   transform: rotate(-45deg);
   vertical-align: top;
-  width: 0.45em;
+  width: 0.75rem;
+  cursor: pointer;
 }
 
 .chevron.bottom:before {
