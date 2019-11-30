@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow md:shadow-md lg:shadow-lg w-1/4 p-2">
+  <div class="bg-white shadow-lg w-full p-3 my-4 rounded">
     <slot></slot>
   </div>
 </template>
@@ -9,4 +9,3 @@ export default {
   name: "PostCard"
 };
 </script>
-<style lang="postcss" scoped></style>
