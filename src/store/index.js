@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     updateActionsList: (state, payload) => {
       state.actionsList.push(payload);
+    },
+    updateLastActionIndex: (state, payload) => {
+      state.lastActionIndex = payload;
     }
   },
   actions: {
@@ -41,19 +44,22 @@ export default new Vuex.Store({
         throw new Error(error);
       }
     },
-    movePostItem: async ({ commit }, { index, direction, item }) => {
+    movePostItem: ({ commit }, { index, direction, item }) => {
       const movePayload = {
         from: index,
         to: index + direction,
-        text: function() {
-          return `moved post with ID:${item.id} from position ${this.from} to ${this.to}`;
-        }
+        description: `moved post with ID:${
+          item.id
+        } from position ${index} to ${index + direction}`
       };
 
       commit("updateActionsList", movePayload);
     },
     updateLoadingState: ({ commit }, payload) => {
       commit("setLoadingState", payload);
+    },
+    performTimeTravel: ({ commit }, actionIndex) => {
+      commit("updateLastActionIndex", actionIndex);
     }
   },
   getters: {
@@ -63,6 +69,7 @@ export default new Vuex.Store({
         actionsList: state.actionsList,
         lastActionIndex: state.lastActionIndex
       }),
+    getActionsList: state => state.actionsList,
     getLoadingState: state => state.loading
   },
   modules: {}
