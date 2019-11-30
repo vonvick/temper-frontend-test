@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import CardComponent from "@/components/CardComponent.vue";
+import CardComponent from "@/components/utility/CardComponent.vue";
 
 describe("CardComponent.vue", () => {
   it("renders with the slot content when passed in", () => {
