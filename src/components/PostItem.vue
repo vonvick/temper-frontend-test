@@ -1,45 +1,43 @@
 <template>
   <CardComponent>
-    <template>
-      <div class="flex items-center">
-        <div class="w-4/5">
-          <h6>{{ item.title }}</h6>
+    <div class="flex items-center post-item-wrapper">
+      <div class="w-4/5">
+        <p class="text-lg">ID:{{ item.id }}. {{ item.title }}</p>
+      </div>
+      <div class="w-1/5 flex-col">
+        <div
+          v-if="itemIndex > 0"
+          class="relative flex justify-center"
+          @click="
+            $emit('move-post', {
+              direction: -1,
+              item,
+              index: itemIndex
+            })
+          "
+        >
+          <span class="chevron top"></span>
         </div>
-        <div class="w-1/5 flex-col">
-          <div
-            v-if="itemIndex > 0"
-            class="up-action-container"
-            @click="
-              $emit('move-post', {
-                direction: -1,
-                item,
-                index: itemIndex
-              })
-            "
-          >
-            <span class="chevron top"></span>
-          </div>
 
-          <div
-            v-if="itemIndex < totalLength - 1"
-            class="down-action-container"
-            @click="
-              $emit('move-post', {
-                direction: 1,
-                item,
-                index: itemIndex
-              })
-            "
-          >
-            <span class="chevron bottom"></span>
-          </div>
+        <div
+          v-if="itemIndex < totalLength - 1"
+          class="relative flex justify-center "
+          @click="
+            $emit('move-post', {
+              direction: 1,
+              item,
+              index: itemIndex
+            })
+          "
+        >
+          <span class="chevron bottom"></span>
         </div>
       </div>
-    </template>
+    </div>
   </CardComponent>
 </template>
 <script>
-import CardComponent from "@/components/CardComponent";
+import CardComponent from "@/components/utility/CardComponent";
 
 export default {
   name: "PostItem",
@@ -59,6 +57,7 @@ export default {
 .chevron::before {
   border-style: solid;
   border-width: 0.125rem 0.125rem 0 0;
+  border-color: #2a4365;
   content: "";
   display: inline-block;
   height: 0.75rem;
@@ -74,5 +73,8 @@ export default {
 .chevron.bottom:before {
   top: 0;
   transform: rotate(135deg);
+}
+.post-item-wrapper {
+  min-height: 5rem;
 }
 </style>
