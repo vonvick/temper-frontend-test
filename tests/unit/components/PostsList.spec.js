@@ -1,20 +1,12 @@
 import { shallowMount } from "@vue/test-utils";
 import PostItem from "@/components/PostItem.vue";
 import PostsList from "@/components/PostsList.vue";
+import mockPosts from "@/fakers/posts";
 
 describe("PostsList.vue", () => {
   let wrapper;
   const postsListProps = {
-    postsList: [
-      {
-        title: "Lorem Ipsum dolor",
-        id: 1
-      },
-      {
-        title: "Testing card item 2",
-        id: 2
-      }
-    ]
+    postsList: mockPosts.slice(0, 2)
   };
 
   beforeEach(() => {

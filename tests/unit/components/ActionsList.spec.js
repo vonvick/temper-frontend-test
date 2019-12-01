@@ -2,24 +2,13 @@ import { shallowMount } from "@vue/test-utils";
 import ActionItem from "@/components/ActionItem.vue";
 import ActionsList from "@/components/ActionsList.vue";
 
+import actionsListProps from "@/fakers/actionsList";
+
 describe("ActionsList.vue", () => {
   let wrapper;
   const noActionsListProps = {
     actionsList: []
   };
-
-  const actionsListProps = [
-    {
-      from: 0,
-      to: 1,
-      description: "moved post with ID:1 from position 0 to 1"
-    },
-    {
-      from: 1,
-      to: 2,
-      description: "moved post with ID:2 from position 1 to 2"
-    }
-  ];
 
   beforeEach(() => {
     wrapper = shallowMount(ActionsList, {
