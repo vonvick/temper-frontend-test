@@ -1,5 +1,5 @@
 <template>
-  <CardComponent>
+  <CardComponent :classNames="cardClasses">
     <div class="flex h-12 items-center justify-between">
       <div>
         <p>{{ description }}</p>
@@ -34,7 +34,13 @@ export default {
     actionIndex: Number
   },
   data() {
-    return {};
+    return {
+      cardClasses: {
+        "border-gray-400": this.actionIndex > 0,
+        "border-t": this.actionIndex > 0,
+        "border-solid": this.actionIndex > 0
+      }
+    };
   }
 };
 </script>

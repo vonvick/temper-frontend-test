@@ -36,7 +36,7 @@ export default {
   }
 };
 </script>
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .actions-container {
   max-height: 40rem;
   overflow-y: auto;

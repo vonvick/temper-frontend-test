@@ -1,5 +1,5 @@
 <template>
-  <CardComponent>
+  <CardComponent :classNames="cardClasses">
     <div class="flex items-center post-item-wrapper">
       <div class="w-4/5">
         <p class="text-lg">ID:{{ item.id }}. {{ item.title }}</p>
@@ -7,6 +7,7 @@
       <div class="w-1/5 flex-col">
         <div
           v-if="itemIndex > 0"
+          :id="`top-arrow-${itemIndex}`"
           class="relative flex justify-center"
           @click="
             $emit('move-post', {
@@ -21,6 +22,7 @@
 
         <div
           v-if="itemIndex < totalLength - 1"
+          :id="`bottom-arrow-${itemIndex}`"
           class="relative flex justify-center "
           @click="
             $emit('move-post', {
@@ -46,10 +48,18 @@ export default {
     item: Object,
     itemIndex: Number,
     totalLength: Number
+  },
+  data() {
+    return {
+      cardClasses: {
+        "my-4": true,
+        rounded: true
+      }
+    };
   }
 };
 </script>
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .up-action-container,
 .down-action-container {
   position: relative;
