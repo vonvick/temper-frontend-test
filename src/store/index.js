@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import PostService from "@/services/postService";
-import { applyActionList } from "@/helpers/applyActionList";
+import { postsListFormatter } from "@/helpers/postsListFormatter";
 
 Vue.use(Vuex);
 
@@ -64,7 +64,7 @@ export default new Vuex.Store({
   },
   getters: {
     getPostLists: state =>
-      applyActionList({
+      postsListFormatter({
         postsList: state.postsList,
         actionsList: state.actionsList,
         lastActionIndex: state.lastActionIndex

@@ -1,6 +1,6 @@
 import { swapListItems } from "./swapListItems";
 
-export const applyActionList = ({
+export const postsListFormatter = ({
   postsList,
   actionsList,
   lastActionIndex
