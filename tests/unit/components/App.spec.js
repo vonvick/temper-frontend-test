@@ -26,7 +26,7 @@ describe("App.vue", () => {
 
     getters = {
       getLoadingState: jest.fn(),
-      getPostLists: () => mockPosts,
+      getPostsList: () => mockPosts,
       getActionsList: () => actionsListMocks
     };
     store = new Vuex.Store({

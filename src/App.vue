@@ -4,7 +4,7 @@
 
     <div class="m-auto w-10/12">
       <div class="flex flex-wrap -mx-3 pt-20 pb-10">
-        <PostsList :posts-list="getPostLists" v-on:move-post="movePostItem" />
+        <PostsList :posts-list="getPostsList" v-on:move-post="movePostItem" />
 
         <ActionsList
           :actions-list="getActionsList"
@@ -35,7 +35,7 @@ export default {
     ...mapActions(["movePostItem", "fetchPostItems", "performTimeTravel"])
   },
   computed: {
-    ...mapGetters(["getPostLists", "getActionsList", "getLoadingState"])
+    ...mapGetters(["getPostsList", "getActionsList", "getLoadingState"])
   }
 };
 </script>

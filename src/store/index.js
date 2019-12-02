@@ -1,15 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import PostService from "@/services/postService";
-import { postsListFormatter } from "@/helpers/postsListFormatter";
+import { swapListItems } from "@/helpers/swapListItems";
 
 Vue.use(Vuex);
 
 export const state = {
   loading: false,
   postsList: [],
-  actionsList: [],
-  lastActionIndex: -1
+  actionsList: []
 };
 
 export const mutations = {
@@ -45,32 +44,40 @@ export const actions = {
       throw new Error(error);
     }
   },
-  movePostItem: ({ commit }, { index, direction, item }) => {
+  movePostItem: (
+    { commit, state: { postsList } },
+    { index, direction, item }
+  ) => {
+    const sortedPostsList = swapListItems({
+      itemsList: postsList,
+      index1: index,
+      index2: index + direction
+    });
+
     const movePayload = {
       from: index,
       to: index + direction,
       description: `moved post with ID:${
         item.id
-      } from position ${index} to ${index + direction}`
+      } from position ${index} to ${index + direction}`,
+      postsListSnapShot: sortedPostsList
     };
 
     commit("updateActionsList", movePayload);
+    commit("updatePostsList", sortedPostsList);
   },
   updateLoadingState: ({ commit }, payload) => {
     commit("setLoadingState", payload);
   },
-  performTimeTravel: ({ commit }, actionIndex) => {
-    commit("updateLastActionIndex", actionIndex);
+  performTimeTravel: ({ commit, state: { actionsList } }, actionIndex) => {
+    const { postsListSnapShot } = actionsList[actionIndex];
+
+    commit("updatePostsList", postsListSnapShot);
   }
 };
 
 export const getters = {
-  getPostLists: state =>
-    postsListFormatter({
-      postsList: state.postsList,
-      actionsList: state.actionsList,
-      lastActionIndex: state.lastActionIndex
-    }),
+  getPostsList: state => state.postsList,
   getActionsList: state => state.actionsList,
   getLoadingState: state => state.loading
 };

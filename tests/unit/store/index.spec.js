@@ -23,9 +23,7 @@ describe("App Store", () => {
       mutations,
       state
     };
-  });
 
-  beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(Vuex);
     store = new Vuex.Store(cloneDeep(storeConfig));
@@ -38,25 +36,25 @@ describe("App Store", () => {
   });
 
   it("updates the actionsList list when a post is moved", () => {
-    const item = { ...mockPosts[1] };
-    const index = 1;
-    const direction = -1;
+    const item = { ...mockPosts[0] };
+
     expect(store.state.actionsList).toEqual([]);
-    store.dispatch("movePostItem", { item, index, direction });
-    expect(store.state.actionsList).toEqual([
-      {
-        from: index,
-        to: index + direction,
-        description: `moved post with ID:${
-          item.id
-        } from position ${index} to ${index + direction}`
-      }
-    ]);
+    store.dispatch("movePostItem", { item, index: 0, direction: 1 });
+    store.dispatch("movePostItem", { item, index: 1, direction: 1 });
+    store.dispatch("movePostItem", { item, index: 2, direction: 1 });
+    expect(store.state.actionsList.length).toBe(3);
   });
 
-  it("updates the lastActionIndex value when performTimeTravel is called", async () => {
-    expect(store.state.lastActionIndex).toEqual(-1);
-    await store.dispatch("performTimeTravel", 2);
-    expect(store.state.lastActionIndex).toBe(2);
+  it("updates the postsList state when performTimeTravel is called", async () => {
+    await store.dispatch("performTimeTravel", 1);
+
+    expect(store.state.postsList[2]).toEqual({
+      userId: 1,
+      id: 1,
+      title:
+        "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+      body:
+        "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto"
+    });
   });
 });
