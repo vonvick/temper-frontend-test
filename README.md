@@ -1,9 +1,12 @@
 # temper-frontend-test
+This is a demo app to showcase time travel i
 
 ## Project setup
-```
+````
 yarn install
 ```
+Create a .env.development.local file and set the API_URL
+`VUE_APP_API_URL=https://jsonplaceholder.typicode.com`
 
 ### Compiles and hot-reloads for development
 ```
@@ -20,10 +23,5 @@ yarn build
 yarn test:unit
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Deployed App
+https://quizzical-boyd-82ae4e.netlify.com/
