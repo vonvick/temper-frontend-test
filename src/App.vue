@@ -4,7 +4,11 @@
 
     <div class="m-auto w-10/12">
       <div class="flex flex-wrap -mx-3 pt-20 pb-10">
-        <PostsList :posts-list="getPostsList" v-on:move-post="movePostItem" />
+        <PostsList
+          :posts-list="getPostsList"
+          :error-message="errorMessage"
+          v-on:move-post="movePostItem"
+        />
 
         <ActionsList
           :actions-list="getActionsList"
@@ -28,11 +32,23 @@ export default {
     ActionsList,
     LoadingComponent
   },
+  data() {
+    return {
+      errorMessage: ""
+    };
+  },
   created() {
-    this.fetchPostItems({ limit: 5 });
+    this.performPostsFetch();
   },
   methods: {
-    ...mapActions(["movePostItem", "fetchPostItems", "performTimeTravel"])
+    ...mapActions(["movePostItem", "fetchPostItems", "performTimeTravel"]),
+    async performPostsFetch() {
+      try {
+        await this.fetchPostItems({ limit: 5 });
+      } catch (error) {
+        this.errorMessage = "An error occured while trying to fetch posts.";
+      }
+    }
   },
   computed: {
     ...mapGetters(["getPostsList", "getActionsList", "getLoadingState"])

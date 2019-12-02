@@ -20,9 +20,6 @@ export const mutations = {
   },
   updateActionsList: (state, payload) => {
     state.actionsList.push(payload);
-  },
-  updateLastActionIndex: (state, payload) => {
-    state.lastActionIndex = payload;
   }
 };
 
@@ -41,7 +38,7 @@ export const actions = {
     } catch (error) {
       dispatch("updateLoadingState", false);
 
-      throw new Error(error);
+      throw new Error("Unable to Load posts");
     }
   },
   movePostItem: (

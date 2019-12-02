@@ -30,4 +30,19 @@ describe("PostsList.vue", () => {
 
     expect(postItem.length).toEqual(2);
   });
+
+  it("renders the text 'No Posts to load' if no postsList is present", () => {
+    wrapper.setProps({ postsList: [] });
+
+    expect(wrapper.find("#noPostText").text()).toEqual("No Posts to load!");
+  });
+
+  it("renders the error message props if an error occured while fetching post", () => {
+    wrapper.setProps({
+      postsList: [],
+      errorMessage: "An error occured while fetching posts"
+    });
+
+    expect(wrapper.find("#postError").text()).toEqual(wrapper.vm.errorMessage);
+  });
 });
